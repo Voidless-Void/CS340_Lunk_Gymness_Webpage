@@ -1,8 +1,8 @@
 --Queries for Trainers Table
 SELECT * FROM Trainers;
 DELETE FROM Trainers WHERE condition;
-
-
+UPDATE Trainers SET trainerID = trainerID, firstName = firstName, lastName = lastName, specialty=specialty WHERE condition;
+INSERT INTO Trainers (trainerID, firstName, lastName, specialty) VALUES (@trainerIDInput,@firstNameInput, @lastNameInput, @specialtyInput);
 --Queries for Classes Table
 SELECT * FROM Classes;
 DELETE FROM Classes WHERE condition;
