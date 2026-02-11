@@ -25,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 const pool = mysql.createPool({
   host: process.env.DB_HOST || 'localhost',
   user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Bazinga13542%',
+  password: process.env.DB_PASSWORD || 'Password',
   database: process.env.DB_NAME || 'LunkGymness',
   waitForConnections: true,
   connectionLimit: 10,
@@ -189,3 +189,4 @@ app.post('/trainers/delete/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
