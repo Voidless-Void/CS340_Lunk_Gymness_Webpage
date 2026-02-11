@@ -1,0 +1,34 @@
+<div class="page">
+  <h1>Edit Equipment</h1>
+  
+  <form method="POST" action="/equipment/edit/{{equipment.equipmentID}}" class="form">
+    <div class="form-group">
+      <label for="equipmentName">Equipment Name:</label>
+      <input type="text" id="equipmentName" name="equipmentName" value="{{equipment.equipmentName}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" value="{{equipment.category}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="condition">Condition:</label>
+      <select id="condition" name="condition" required>
+        <option value="Good" {{#if (eq equipment.condition "Good")}}selected{{/if}}>Good</option>
+        <option value="Fair" {{#if (eq equipment.condition "Fair")}}selected{{/if}}>Fair</option>
+        <option value="Needs Repair" {{#if (eq equipment.condition "Needs Repair")}}selected{{/if}}>Needs Repair</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="maintenanceDate">Maintenance Date:</label>
+      <input type="date" id="maintenanceDate" name="maintenanceDate" value="{{equipment.maintenanceDate}}">
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update Equipment</button>
+      <a href="/equipment" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

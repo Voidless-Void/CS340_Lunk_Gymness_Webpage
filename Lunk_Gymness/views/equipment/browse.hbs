@@ -1,0 +1,39 @@
+<div class="page">
+  <h1>Equipment Inventory</h1>
+  
+  <a href="/equipment/add" class="btn btn-primary">Add New Equipment</a>
+  
+  {{#if equipment}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Condition</th>
+          <th>Maintenance Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each equipment}}
+          <tr>
+            <td>{{this.equipmentID}}</td>
+            <td>{{this.equipmentName}}</td>
+            <td>{{this.category}}</td>
+            <td>{{this.condition}}</td>
+            <td>{{this.maintenanceDate}}</td>
+            <td>
+              <a href="/equipment/edit/{{this.equipmentID}}" class="btn btn-small btn-edit">Edit</a>
+              <form method="POST" action="/equipment/delete/{{this.equipmentID}}" style="display:inline;">
+                <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No equipment found. <a href="/equipment/add">Add some equipment</a></p>
+  {{/if}}
+</div>
