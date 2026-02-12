@@ -1,0 +1,43 @@
+<div class="page">
+  <h1>Members</h1>
+  
+  <a href="/members/add" class="btn btn-primary">Add New Member</a>
+  
+  {{#if members}}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Type</th>
+          <th>Join Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each members}}
+          <tr>
+            <td>{{this.memberID}}</td>
+            <td>{{this.firstName}}</td>
+            <td>{{this.lastName}}</td>
+            <td>{{this.email}}</td>
+            <td>{{this.phone}}</td>
+            <td>{{this.membershipType}}</td>
+            <td>{{this.joinDate}}</td>
+            <td>
+              <a href="/members/edit/{{this.memberID}}" class="btn btn-small btn-edit">Edit</a>
+              <form method="POST" action="/members/delete/{{this.memberID}}" style="display:inline;">
+                <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
+              </form>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  {{else}}
+    <p>No members found. <a href="/members/add">Add a new member</a></p>
+  {{/if}}
+</div>

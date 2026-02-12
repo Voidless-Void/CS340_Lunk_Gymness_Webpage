@@ -1,0 +1,30 @@
+<div class="page">
+  <h1>Edit Class Registration</h1>
+  
+  <form method="POST" action="/classregistrations/edit/{{registration.classregID}}" class="form">
+    <div class="form-group">
+      <label for="memberID">Member ID:</label>
+      <input type="text" id="memberID" name="memberID" value="{{registration.memberID}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="classID">Class ID:</label>
+      <input type="text" id="classID" name="classID" value="{{registration.classID}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="registrationDate">Registration Date:</label>
+      <input type="date" id="registrationDate" name="registrationDate" value="{{registration.registrationDate}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="classType">Class Type:</label>
+      <input type="text" id="classType" name="classType" value="{{registration.classType}}">
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update a Class Registration</button>
+      <a href="/classregistrations" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>
