@@ -185,6 +185,247 @@ app.post('/trainers/delete/:id', async (req, res) => {
   }
 });
 
+//Class Registration routes
+app.get('/classregistrations', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [classRegistrations] = await connection.query('SELECT * FROM ClassRegistrations');
+    connection.release();
+    res.render('classregistrations/browse', { classRegistrations });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving class registrations');
+  }
+});
+
+app.get('/classregistrations/add', (req, res) => {
+  res.render('classregistrations/add');
+});
+
+app.post('/classregistrations', async (req, res) => {
+  try {
+    const { memberID, classID, registrationDate, classType } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'INSERT INTO ClassRegistrations (memberID, classID, registrationDate, classType) VALUES (?, ?, ?, ?)',
+      [memberID, classID, registrationDate, classType]
+    );
+    connection.release();
+    res.redirect('/classregistrations');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding class registration');
+  }
+});
+
+app.get('/classregistrations/edit/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [registrations] = await connection.query(
+      'SELECT * FROM ClassRegistrations WHERE classregID = ?', 
+      [req.params.id]
+    );
+    connection.release();
+
+    const registration = registrations[0];
+    if (registration.registrationDate instanceof Date) {
+        registration.registrationDate = registration.registrationDate.toISOString().split('T')[0];
+    }
+
+    res.render('classregistrations/edit', { registration });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving class registration');
+  }
+});
+
+app.post('/classregistrations/edit/:id', async (req, res) => {
+  try {
+    const { memberID, classID, registrationDate, classType } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'UPDATE ClassRegistrations SET memberID = ?, classID = ?, registrationDate = ?, classType = ? WHERE classregID = ?',
+      [memberID, classID, registrationDate, classType, req.params.id]
+    );
+    connection.release();
+    res.redirect('/classregistrations');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating class registration');
+  }
+});
+
+app.post('/classregistrations/delete/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    await connection.query('DELETE FROM ClassRegistrations WHERE classregID = ?', [req.params.id]);
+    connection.release();
+    res.redirect('/classregistrations');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error deleting class registration');
+  }
+});
+
+//Class Routes
+app.get('/classes', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [classes] = await connection.query('SELECT * FROM Classes');
+    connection.release();
+    res.render('classes/browse', { classes });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving classes');
+  }
+});
+
+app.get('/classes/add', (req, res) => {
+  res.render('classes/add');
+});
+
+app.post('/classes', async (req, res) => {
+  try {
+    const { classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'INSERT INTO Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID]
+    );
+    connection.release();
+    res.redirect('/classes');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding class');
+  }
+});
+
+app.get('/classes/edit/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [classes] = await connection.query('SELECT * FROM Classes WHERE classID = ?', [req.params.id]);
+    connection.release();
+
+    const classData = classes[0];
+    if (classData.scheduleTime instanceof Date) {
+        classData.scheduleTime = classData.scheduleTime.toISOString().slice(0, 16);
+    }
+
+    res.render('classes/edit', { class: classData });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving class');
+  }
+});
+
+app.post('/classes/edit/:id', async (req, res) => {
+  try {
+    const { className, scheduleTime, roomNumber, capacity, trainerID, equipmentID } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'UPDATE Classes SET className = ?, scheduleTime = ?, roomNumber = ?, capacity = ?, trainerID = ?, equipmentID = ? WHERE classID = ?',
+      [className, scheduleTime, roomNumber, capacity, trainerID, equipmentID, req.params.id]
+    );
+    connection.release();
+    res.redirect('/classes');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating class');
+  }
+});
+
+app.post('/classes/delete/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    await connection.query('DELETE FROM Classes WHERE classID = ?', [req.params.id]);
+    connection.release();
+    res.redirect('/classes');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error deleting class');
+  }
+});
+
+
+//Members route
+app.get('/members', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [members] = await connection.query('SELECT * FROM Members');
+    connection.release();
+    res.render('members/browse', { members });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving members');
+  }
+});
+
+app.get('/members/add', (req, res) => {
+  res.render('members/add');
+});
+
+app.post('/members', async (req, res) => {
+  try {
+    const { memberID, firstName, lastName, email, phone, membershipType, joinDate } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'INSERT INTO Members (memberID, firstName, lastName, email, phone, membershipType, joinDate) VALUES (?, ?, ?, ?, ?, ?, ?)',
+      [memberID, firstName, lastName, email, phone, membershipType, joinDate]
+    );
+    connection.release();
+    res.redirect('/members');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding member');
+  }
+});
+
+app.get('/members/edit/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    const [members] = await connection.query('SELECT * FROM Members WHERE memberID = ?', [req.params.id]);
+    connection.release();
+
+    const member = members[0];
+    if (member.joinDate instanceof Date) {
+        member.joinDate = member.joinDate.toISOString().split('T')[0];
+    }
+
+    res.render('members/edit', { member });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error retrieving member');
+  }
+});
+
+app.post('/members/edit/:id', async (req, res) => {
+  try {
+    const { firstName, lastName, email, phone, membershipType, joinDate } = req.body;
+    const connection = await pool.getConnection();
+    await connection.query(
+      'UPDATE Members SET firstName = ?, lastName = ?, email = ?, phone = ?, membershipType = ?, joinDate = ? WHERE memberID = ?',
+      [firstName, lastName, email, phone, membershipType, joinDate, req.params.id]
+    );
+    connection.release();
+    res.redirect('/members');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error updating member');
+  }
+});
+
+app.post('/members/delete/:id', async (req, res) => {
+  try {
+    const connection = await pool.getConnection();
+    await connection.query('DELETE FROM Members WHERE memberID = ?', [req.params.id]);
+    connection.release();
+    res.redirect('/members');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error deleting member');
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
