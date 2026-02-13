@@ -13,8 +13,8 @@ INSERT INTO Classes (classID, className, scheduleTime, roomNumber, capacity, tra
 --Queries for ClassRegistrations
 SELECT * FROM ClassRegistrations;
 DELETE FROM ClassRegistrations WHERE criteria;
-UPDATE ClassRegistrations SET classregID = classregID, memberID = memberID, classID = classID, registrationDate = registrationDate, classType = classType WHERE criteria;
-INSERT INTO ClassRegistrations (classregID, memberID, classID, registrationDate, classType) VALUES (@classregIDInput, @memberIDInput, @classIDinput, @registrationDateInput, @classTypeInput);
+UPDATE ClassRegistrations SET classRegID = classRegID, memberID = memberID, classID = classID, registrationDate = registrationDate, classType = classType WHERE criteria;
+INSERT INTO ClassRegistrations (classRegID, memberID, classID, registrationDate, classType) VALUES (@classRegIDInput, @memberIDInput, @classIDinput, @registrationDateInput, @classTypeInput);
 
 
 --Queries for Equipment
