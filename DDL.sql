@@ -109,12 +109,12 @@ VALUES
 --          Tracks which members are registered for which classes
 -- =====================================================
 CREATE TABLE ClassRegistrations (
-  classregID INT NOT NULL AUTO_INCREMENT,
+  classRegID INT NOT NULL AUTO_INCREMENT,
   memberID INT NOT NULL,
   classID INT NOT NULL,
   registrationDate DATE NOT NULL,
   classType VARCHAR(50) NOT NULL,
-  PRIMARY KEY (classregID),
+  PRIMARY KEY (classRegID),
   FOREIGN KEY (memberID) REFERENCES Members (memberID) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (classID) REFERENCES Classes (classID) ON DELETE CASCADE ON UPDATE CASCADE
 );
