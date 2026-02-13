@@ -90,12 +90,17 @@ CREATE TABLE Classes (
 );
 
 -- Insert sample classes data
-INSERT INTO Classes (className, scheduleTime, roomNumber, trainerID, capacity, equipmentID)
+INSERT INTO Classes (className, scheduleTime, roomNumber, 
+                      trainerID, capacity, equipmentID)
 VALUES
-  ('Morning Yoga', '2024-05-01 08:00:00', 'R101', 1, 15, 1),
-  ('HIIT Blast', '2024-05-01 10:00:00', 'R202', 3, 12, 2),
-  ('Strength Training', '2024-05-02 09:30:00', 'R303', 2, 15, 3),
-  ('Evening Yoga', '2024-05-02 18:00:00', 'R101', 1, 15, 1);
+  ('Morning Yoga', '2024-05-01 08:00:00', 'R101', 
+    (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats')),
+  ('HIIT Blast', '2024-05-01 10:00:00', 'R202', 
+    (SELECT trainerID FROM Trainers WHERE firstName = 'Olivia' AND lastName = 'Turner'), 12, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Treadmill')),
+  ('Strength Training', '2024-05-02 09:30:00', 'R303', 
+    (SELECT trainerID FROM Trainers WHERE firstName = 'Marcus' AND lastName = 'Reed'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Dumbbells Set')),
+  ('Evening Yoga', '2024-05-02 18:00:00', 'R101', 
+    (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats'));
 
 
 -- =====================================================
@@ -117,9 +122,9 @@ CREATE TABLE ClassRegistrations (
 -- Insert sample class registrations data
 INSERT INTO ClassRegistrations (memberID, classID, registrationDate, classType)
 VALUES
-  (1, 1, '2024-04-20', 'Yoga'),
-  (2, 2, '2024-04-22', 'Cardio'),
-  (3, 3, '2024-04-25', 'Strength'),
-  (1, 4, '2024-04-28', 'Yoga'),
-  (4, 2, '2024-04-30', 'Cardio');
+  ((SELECT memberID FROM Members WHERE firstName = 'Sarah' AND lastName = 'Kim'), (SELECT classID FROM Classes WHERE className = 'Morning Yoga'), '2024-04-20', 'Yoga'),
+  ((SELECT memberID FROM Members WHERE firstName = 'Jason' AND lastName = 'Patel'), (SELECT classID FROM Classes WHERE className = 'HIIT Blast'), '2024-04-22', 'Cardio'),
+  ((SELECT memberID FROM Members WHERE firstName = 'Maria' AND lastName = 'Lopez'), (SELECT classID FROM Classes WHERE className = 'Strength Training'), '2024-04-25', 'Strength'),
+  ((SELECT memberID FROM Members WHERE firstName = 'Sarah' AND lastName = 'Kim'), (SELECT classID FROM Classes WHERE className = 'Evening Yoga'), '2024-04-28', 'Yoga'),
+  ((SELECT memberID FROM Members WHERE firstName = 'Daniel' AND lastName = 'Brooks'), (SELECT classID FROM Classes WHERE className = 'HIIT Blast'), '2024-04-30', 'Cardio');
 
