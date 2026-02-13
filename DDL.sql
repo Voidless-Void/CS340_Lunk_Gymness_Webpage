@@ -2,10 +2,6 @@
 -- CS340 Database Course
 -- Created by: Carter Deal and Samuel Dressel
 
--- Create database
-CREATE DATABASE IF NOT EXISTS LunkGymness;
-USE LunkGymness;
-
 -- =====================================================
 -- Table: Equipment
 -- Purpose: Maintains an inventory of equipment and its condition for scheduling and maintenance
