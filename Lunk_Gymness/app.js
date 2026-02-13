@@ -16,7 +16,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.engine('hbs', exphbs.engine({ 
   extname: 'hbs',
   defaultLayout: 'main',
-  layoutsDir: path.join(__dirname, 'views', 'layouts')
+  layoutsDir: path.join(__dirname, 'views', 'layouts'),
+  helpers: {
+    eq: function(a, b) {
+      return a === b;
+    }
+  }
 }));
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
@@ -430,4 +435,5 @@ app.post('/members/delete/:id', async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
 
