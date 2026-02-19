@@ -1,7 +1,7 @@
 <div class="page">
   <h1>Members</h1>
   
-  <a href="/members/add" class="btn btn-primary">Add New Member</a>
+  <a class="btn btn-primary">Add New Member</a>
   
   {{#if members}}
     <table class="table">
@@ -28,8 +28,8 @@
             <td>{{this.membershipType}}</td>
             <td>{{this.joinDate}}</td>
             <td>
-              <a href="/members/edit/{{this.memberID}}" class="btn btn-small btn-edit">Edit</a>
-              <form method="POST" action="/members/delete/{{this.memberID}}" style="display:inline;">
+              <a class="btn btn-small btn-edit">Edit</a>
+              <form style="display:inline;">
                 <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
               </form>
             </td>
@@ -38,6 +38,6 @@
       </tbody>
     </table>
   {{else}}
-    <p>No members found. <a href="/members/add">Add a new member</a></p>
+    <p>No members found. <a>Add a new member</a></p>
   {{/if}}
 </div>

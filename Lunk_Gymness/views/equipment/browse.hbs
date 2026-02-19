@@ -1,7 +1,7 @@
 <div class="page">
   <h1>Equipment Inventory</h1>
   
-  <a href="/equipment/add" class="btn btn-primary">Add New Equipment</a>
+  <a class="btn btn-primary">Add New Equipment</a>
   
   {{#if equipment}}
     <table class="table">
@@ -24,8 +24,8 @@
             <td>{{this.condition}}</td>
             <td>{{this.maintenanceDate}}</td>
             <td>
-              <a href="/equipment/edit/{{this.equipmentID}}" class="btn btn-small btn-edit">Edit</a>
-              <form method="POST" action="/equipment/delete/{{this.equipmentID}}" style="display:inline;">
+              <a class="btn btn-small btn-edit">Edit</a>
+              <form style="display:inline;">
                 <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
               </form>
             </td>
@@ -34,6 +34,6 @@
       </tbody>
     </table>
   {{else}}
-    <p>No equipment found. <a href="/equipment/add">Add some equipment</a></p>
+    <p>No equipment found. <a>Add some equipment</a></p>
   {{/if}}
 </div>
