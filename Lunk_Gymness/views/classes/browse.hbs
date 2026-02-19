@@ -1,7 +1,7 @@
 <div class="page">
   <h1>Classes</h1>
   
-  <a href="/classes/add" class="btn btn-primary">Add New Class</a>
+  <a class="btn btn-primary">Add New Class</a>
   
   {{#if classes}}
     <table class="table">
@@ -28,8 +28,8 @@
             <td>{{this.trainerID}}</td>
             <td>{{this.equipmentID}}</td>
             <td>
-              <a href="/classes/edit/{{this.classID}}" class="btn btn-small btn-edit">Edit</a>
-              <form method="POST" action="/classes/delete/{{this.classID}}" style="display:inline;">
+              <a class="btn btn-small btn-edit">Edit</a>
+              <form style="display:inline;">
                 <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
               </form>
             </td>
@@ -38,7 +38,7 @@
       </tbody>
     </table>
   {{else}}
-    <p>No classes found. <a href="/classes/add">Add a new class</a></p>
+    <p>No classes found. <a>Add a new class</a></p>
   {{/if}}
 </div>
 

@@ -1,7 +1,7 @@
 <div class="page">
   <h1>Trainers</h1>
   
-  <a href="/trainers/add" class="btn btn-primary">Add New Trainer</a>
+  <a class="btn btn-primary">Add New Trainer</a>
   
   {{#if trainers}}
     <table class="table">
@@ -22,8 +22,8 @@
             <td>{{this.lastName}}</td>
             <td>{{this.specialty}}</td>
             <td>
-              <a href="/trainers/edit/{{this.trainerID}}" class="btn btn-small btn-edit">Edit</a>
-              <form method="POST" action="/trainers/delete/{{this.trainerID}}" style="display:inline;">
+              <a class="btn btn-small btn-edit">Edit</a>
+              <form style="display:inline;">
                 <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
               </form>
             </td>
@@ -32,6 +32,6 @@
       </tbody>
     </table>
   {{else}}
-    <p>No trainers found. <a href="/trainers/add">Add a new trainer</a></p>
+    <p>No trainers found. <a>Add a new trainer</a></p>
   {{/if}}
 </div>

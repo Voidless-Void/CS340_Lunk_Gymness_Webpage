@@ -1,7 +1,7 @@
 <div class="page">
   <h1>Class Registrations</h1>
   
-  <a href="/classregistrations/add" class="btn btn-primary">New Registration</a>
+  <a class="btn btn-primary">New Registration</a>
   
   {{#if classRegistrations}}
     <table class="table">
@@ -24,8 +24,8 @@
             <td>{{this.registrationDate}}</td>
             <td>{{this.classType}}</td>
             <td>
-              <a href="/classregistrations/edit/{{this.classregID}}" class="btn btn-small btn-edit">Edit</a>
-              <form method="POST" action="/classregistrations/delete/{{this.classregID}}" style="display:inline;">
+              <a class="btn btn-small btn-edit">Edit</a>
+              <form style="display:inline;">
                 <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
               </form>
             </td>
@@ -34,7 +34,7 @@
       </tbody>
     </table>
   {{else}}
-    <p>No class registrations found. <a href="/classregistrations/add">Add new class registration</a></p>
+    <p>No class registrations found. <a>Add new class registration</a></p>
   {{/if}}
 </div>
 
