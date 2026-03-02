@@ -1,0 +1,55 @@
+ {{!-- /* # Citation for use of AI Tools:
+      # Date: 10/2/2025
+      # Prompt used to help generate this file:
+      # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
+      # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
+      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
+      # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
+      # - classregistrations (regID, memberID, classID, registrationDate, classType)
+      #  Each table should have a browse.hbs file that displays all records in a table format with an "Add New" button and "Edit" and "Delete" buttons for each record. 
+      #  The "Delete" button should have a confirmation prompt. The "Add New" button should link to an add form, and the "Edit" button should link to an edit form for that specific record.
+      # AI Source URL: https://code.visualstudio.com/docs/copilot/overview
+Links to an external site.  */ --}}
+
+
+<div class="page">
+  <h1>Edit Member</h1>
+  
+  <form action="/members/edit/{{member.memberID}}" class="form">
+    <div class="form-group">
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" value="{{member.firstName}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" value="{{member.lastName}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" value="{{member.email}}" required>
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" value="{{member.phone}}">
+    </div>
+
+    <div class="form-group">
+      <label for="membershipType">Membership Type:</label>
+      <input type="text" id="membershipType" name="membershipType" value="{{member.membershipType}}">
+    </div>
+
+    <div class="form-group">
+      <label for="joinDate">Join Date:</label>
+      <input type="date" id="joinDate" name="joinDate" value="{{member.joinDate}}" required>
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update Member</button>
+      <a href="/members" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

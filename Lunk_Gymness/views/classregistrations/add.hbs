@@ -1,0 +1,49 @@
+ {{!-- /* # Citation for use of AI Tools:
+      # Date: 10/2/2025
+      # Prompt used to help generate this file:
+      # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
+      # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
+      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
+      # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
+      # - classregistrations (regID, memberID, classID, registrationDate, classType)
+      #  Each table should have a browse.hbs file that displays all records in a table format with an "Add New" button and "Edit" and "Delete" buttons for each record. 
+      #  The "Delete" button should have a confirmation prompt. The "Add New" button should link to an add form, and the "Edit" button should link to an edit form for that specific record.
+      # AI Source URL: https://code.visualstudio.com/docs/copilot/overview
+Links to an external site.  */ --}}
+
+<div class="page">
+  <h1>New Class Registration</h1>
+  
+  <form action="/classregistrations" class="form">
+    <div class="form-group">
+      <label for="classregID">Registration ID:</label>
+      <input type="text" id="classregID" name="classregID" required>
+    </div>
+
+    <div class="form-group">
+      <label for="memberID">Member ID:</label>
+      <input type="text" id="memberID" name="memberID" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="classID">Class ID:</label>
+      <input type="text" id="classID" name="classID" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="registrationDate">Registration Date:</label>
+      <input type="date" id="registrationDate" name="registrationDate" required>
+    </div>
+
+    <div class="form-group">
+      <label for="classType">Class Type:</label>
+      <input type="text" id="classType" name="classType" placeholder="e.g. In-person, Virtual">
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Add Class Registration</button>
+      <a href="/classregistrations" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

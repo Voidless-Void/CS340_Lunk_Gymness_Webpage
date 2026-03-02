@@ -1,0 +1,49 @@
+ {{!-- /* # Citation for use of AI Tools:
+      # Date: 10/2/2025
+      # Prompt used to help generate this file:
+      # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
+      # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
+      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
+      # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
+      # - classregistrations (regID, memberID, classID, registrationDate, classType)
+      #  Each table should have a browse.hbs file that displays all records in a table format with an "Add New" button and "Edit" and "Delete" buttons for each record. 
+      #  The "Delete" button should have a confirmation prompt. The "Add New" button should link to an add form, and the "Edit" button should link to an edit form for that specific record.
+      # AI Source URL: https://code.visualstudio.com/docs/copilot/overview
+Links to an external site.  */ --}}
+
+
+<div class="page">
+  <h1>Edit Equipment</h1>
+  
+  <form action="/equipment/edit/{{equipment.equipmentID}}" class="form">
+    <div class="form-group">
+      <label for="equipmentName">Equipment Name:</label>
+      <input type="text" id="equipmentName" name="equipmentName" value="{{equipment.equipmentName}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="category">Category:</label>
+      <input type="text" id="category" name="category" value="{{equipment.category}}" required>
+    </div>
+    
+    <div class="form-group">
+      <label for="condition">Condition:</label>
+      <select id="condition" name="condition" required>
+        <option value="Good" {{#if (eq equipment.condition "Good")}}selected{{/if}}>Good</option>
+        <option value="Fair" {{#if (eq equipment.condition "Fair")}}selected{{/if}}>Fair</option>
+        <option value="Needs Repair" {{#if (eq equipment.condition "Needs Repair")}}selected{{/if}}>Needs Repair</option>
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="maintenanceDate">Maintenance Date:</label>
+      <input type="date" id="maintenanceDate" name="maintenanceDate" value="{{equipment.maintenanceDate}}">
+    </div>
+    
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Update Equipment</button>
+      <a href="/equipment" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

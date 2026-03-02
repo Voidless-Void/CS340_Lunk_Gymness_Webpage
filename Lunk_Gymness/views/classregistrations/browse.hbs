@@ -1,7 +1,21 @@
+ {{!-- /* # Citation for use of AI Tools:
+      # Date: 10/2/2025
+      # Prompt used to help generate this file:
+      # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
+      # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
+      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
+      # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
+      # - classregistrations (regID, memberID, classID, registrationDate, classType)
+      #  Each table should have a browse.hbs file that displays all records in a table format with an "Add New" button and "Edit" and "Delete" buttons for each record. 
+      #  The "Delete" button should have a confirmation prompt. The "Add New" button should link to an add form, and the "Edit" button should link to an edit form for that specific record.
+      # AI Source URL: https://code.visualstudio.com/docs/copilot/overview
+Links to an external site.  */ --}}
+
 <div class="page">
   <h1>Class Registrations</h1>
   
-  <a class="btn btn-primary">New Registration</a>
+  <a href="/classregistrations/add" class="btn btn-primary">New Registration</a>
   
   {{#if classRegistrations}}
     <table class="table">
@@ -24,17 +38,15 @@
             <td>{{this.registrationDate}}</td>
             <td>{{this.classType}}</td>
             <td>
-              <a class="btn btn-small btn-edit">Edit</a>
-              <form style="display:inline;">
-                <button type="submit" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</button>
-              </form>
+              <a href="/classregistrations/edit/{{this.classregID}}" class="btn btn-small btn-edit">Edit</a>
+              <a href="/delete/classregistrations/{{this.classregID}}" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</a>
             </td>
           </tr>
         {{/each}}
       </tbody>
     </table>
   {{else}}
-    <p>No class registrations found. <a>Add new class registration</a></p>
+    <p>No class registrations found. <a href="/classregistrations/add">Add new class registration</a></p>
   {{/if}}
 </div>
 
