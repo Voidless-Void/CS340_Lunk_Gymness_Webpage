@@ -216,6 +216,21 @@ body {
   background-color: #c82333;
 }
 
+.btn-danger {
+  background-color: white;
+  color: #333;
+  border: 1px solid #ccc;
+}
+
+.btn-danger:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-danger:active {
+  background-color: #bdbdbd;
+}
+
+
 /* Tables */
 .table {
   width: 100%;
@@ -277,5 +292,6 @@ footer {
     text-align: center;
   }
 }
+
 
 
