@@ -14,7 +14,7 @@ BEGIN
     ELSEIF tableName = 'equipment' THEN
         DELETE FROM Equipment WHERE equipmentID = id;
     ELSEIF tableName = 'classregistrations' THEN
-        DELETE FROM ClassRegistrations WHERE registrationID = id;
+        DELETE FROM ClassRegistrations WHERE classRegID = id;
     END IF;
 END //
 

@@ -6,7 +6,7 @@
       # - Trainers (trainerID, firstName, lastName, specialty)
       # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
       # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
-      # - classregistrations (regID, memberID, classID, registrationDate, classType)
+      # - classregistrations classRegID, memberID, classID, registrationDate, classType)
       #  Each table should have a browse.hbs file that displays all records in a table format with an "Add New" button and "Edit" and "Delete" buttons for each record. 
       #  The "Delete" button should have a confirmation prompt. The "Add New" button should link to an add form, and the "Edit" button should link to an edit form for that specific entry.
       # AI Source URL: https://code.visualstudio.com/docs/copilot/overview
@@ -143,7 +143,7 @@ app.get('/classregistrations/edit/:id', async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const [registrations] = await connection.query(
-      'SELECT * FROM ClassRegistrations WHERE classregID = ?', 
+      'SELECT * FROM ClassRegistrations WHERE classRegID = ?', 
       [req.params.id]
     );
     connection.release();
@@ -248,7 +248,6 @@ app.get('/reset', async (req, res) => {
     await connection.query('CALL ResetDatabase()');
     connection.release();
     res.redirect(req.get('Referrer') || '/');
-    res.end();
   } catch (error) {
     console.error(error);
     res.status(500).send('Error resetting database');
