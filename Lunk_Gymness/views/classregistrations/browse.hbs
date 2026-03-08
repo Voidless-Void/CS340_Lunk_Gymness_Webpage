@@ -22,8 +22,8 @@ Links to an external site.  */ --}}
       <thead>
         <tr>
           <th>Reg ID</th>
-          <th>Member ID</th>
-          <th>Class ID</th>
+          <th>Member</th>
+          <th>Class</th>
           <th>Registration Date</th>
           <th>Class Type</th>
           <th>Actions</th>
@@ -33,8 +33,8 @@ Links to an external site.  */ --}}
         {{#each classRegistrations}}
           <tr>
             <td>{{this.classRegID}}</td>
-            <td>{{this.memberID}}</td>
-            <td>{{this.classID}}</td>
+            <td>{{this.memberName}}</td>
+            <td>{{this.className}}</td>
             <td>{{this.registrationDate}}</td>
             <td>{{this.classType}}</td>
             <td>

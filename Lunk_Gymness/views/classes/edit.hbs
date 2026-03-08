@@ -15,7 +15,7 @@ Links to an external site.  */ --}}
 <div class="page">
   <h1>Edit Class</h1>
   
-  <form action="/classes/edit/{{class.classID}}" class="form">
+  <form method="POST" action="/edit/classes/{{class.classID}}" class="form">
     <div class="form-group">
       <label for="className">Class Name:</label>
       <input type="text" id="className" name="className" value="{{class.className}}" required>
@@ -36,8 +36,26 @@ Links to an external site.  */ --}}
       <input type="number" id="capacity" name="capacity" value="{{class.capacity}}" min="1">
     </div>
 
+    <div class="form-group">
+      <label for="trainerID">Trainer:</label>
+      <select id="trainerID" name="trainerID" required>
+        <option value="">Select a trainer</option>
+        {{#each trainers}}
+        <option value="{{trainerID}}" {{#if (eq trainerID ../class.trainerID)}}selected{{/if}}>{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
 
-    
+    <div class="form-group">
+      <label for="equipmentID">Equipment:</label>
+      <select id="equipmentID" name="equipmentID" required>
+        <option value="">Select equipment</option>
+        {{#each equipment}}
+        <option value="{{equipmentID}}" {{#if (eq equipmentID ../class.equipmentID)}}selected{{/if}}>{{equipmentName}}</option>
+        {{/each}}
+      </select>
+    </div>
+
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Update Class</button>
       <a href="/classes" class="btn btn-secondary">Cancel</a>

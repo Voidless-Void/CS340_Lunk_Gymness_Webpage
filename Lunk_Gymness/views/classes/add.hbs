@@ -15,7 +15,7 @@ Links to an external site.  */ --}}
 <div class="page">
   <h1>Add New Class</h1>
   
-  <form action="/classes" class="form">
+  <form method="POST" action="/add/classes" class="form">
 
     <div class="form-group">
       <label for="className">Class Name:</label>
@@ -37,8 +37,26 @@ Links to an external site.  */ --}}
       <input type="number" id="capacity" name="capacity" min="1">
     </div>
 
+    <div class="form-group">
+      <label for="trainerID">Trainer:</label>
+      <select id="trainerID" name="trainerID" required>
+        <option value="">Select a trainer</option>
+        {{#each trainers}}
+        <option value="{{trainerID}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
 
-    
+    <div class="form-group">
+      <label for="equipmentID">Equipment:</label>
+      <select id="equipmentID" name="equipmentID" required>
+        <option value="">Select equipment</option>
+        {{#each equipment}}
+        <option value="{{equipmentID}}">{{equipmentName}}</option>
+        {{/each}}
+      </select>
+    </div>
+
     <div class="form-actions">
       <button type="submit" class="btn btn-primary">Add Class</button>
       <a href="/classes" class="btn btn-secondary">Cancel</a>

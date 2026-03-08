@@ -42,10 +42,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // MySQL Connection Pool
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || '',
-  user: process.env.DB_USER || '',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_NAME || '',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || 'Bazinga13542%',
+  database: process.env.DB_NAME || 'LunkGymness',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
@@ -124,7 +124,16 @@ app.get('/trainers/edit/:id', async (req, res) => {
 app.get('/classregistrations', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [classRegistrations] = await connection.query('SELECT * FROM ClassRegistrations');
+    const [classRegistrations] = await connection.query(`
+      SELECT cr.classRegID, 
+             CONCAT(m.firstName, ' ', m.lastName) AS memberName, 
+             c.className, 
+             cr.registrationDate, 
+             cr.classType
+      FROM ClassRegistrations cr
+      JOIN Members m ON cr.memberID = m.memberID
+      JOIN Classes c ON cr.classID = c.classID
+    `);
     connection.release();
     res.render('classregistrations/browse', { classRegistrations });
   } catch (error) {
@@ -135,17 +144,25 @@ app.get('/classregistrations', async (req, res) => {
 
 // render the add page for Class Registrations
 app.get('/classregistrations/add', async (req, res) => {
-  res.render('classregistrations/add');
+  try {
+    const connection = await pool.getConnection();
+    const [members] = await connection.query('SELECT memberID, CONCAT(firstName, " ", lastName) AS name FROM Members');
+    const [classes] = await connection.query('SELECT classID, className FROM Classes');
+    connection.release();
+    res.render('classregistrations/add', { members, classes });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error loading add form');
+  }
 });
 
 // edit page for Class Registrations
 app.get('/classregistrations/edit/:id', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [registrations] = await connection.query(
-      'SELECT * FROM ClassRegistrations WHERE classRegID = ?', 
-      [req.params.id]
-    );
+    const [registrations] = await connection.query('SELECT * FROM ClassRegistrations WHERE classRegID = ?', [req.params.id]);
+    const [members] = await connection.query('SELECT memberID, CONCAT(firstName, " ", lastName) AS name FROM Members');
+    const [classes] = await connection.query('SELECT classID, className FROM Classes');
     connection.release();
 
     const registration = registrations[0];
@@ -153,7 +170,7 @@ app.get('/classregistrations/edit/:id', async (req, res) => {
         registration.registrationDate = registration.registrationDate.toISOString().split('T')[0];
     }
 
-    res.render('classregistrations/edit', { registration });
+    res.render('classregistrations/edit', { registration, members, classes });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error retrieving class registration');
@@ -164,7 +181,14 @@ app.get('/classregistrations/edit/:id', async (req, res) => {
 app.get('/classes', async (req, res) => {
   try {
     const connection = await pool.getConnection();
-    const [classes] = await connection.query('SELECT * FROM Classes');
+    const [classes] = await connection.query(`
+      SELECT c.classID, c.className, c.scheduleTime, c.roomNumber, c.capacity,
+             CONCAT(t.firstName, ' ', t.lastName) AS trainerName,
+             e.equipmentName
+      FROM Classes c
+      JOIN Trainers t ON c.trainerID = t.trainerID
+      JOIN Equipment e ON c.equipmentID = e.equipmentID
+    `);
     connection.release();
     res.render('classes/browse', { classes });
   } catch (error) {
@@ -175,7 +199,16 @@ app.get('/classes', async (req, res) => {
 
 // render the add page for Classes
 app.get('/classes/add', async (req, res) => {
-  res.render('classes/add');
+  try {
+    const connection = await pool.getConnection();
+    const [trainers] = await connection.query('SELECT trainerID, CONCAT(firstName, " ", lastName) AS name FROM Trainers');
+    const [equipment] = await connection.query('SELECT equipmentID, equipmentName FROM Equipment');
+    connection.release();
+    res.render('classes/add', { trainers, equipment });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error loading add form');
+  }
 });
 
 // edit page for Classes
@@ -183,8 +216,16 @@ app.get('/classes/edit/:id', async (req, res) => {
   try {
     const connection = await pool.getConnection();
     const [classes] = await connection.query('SELECT * FROM Classes WHERE classID = ?', [req.params.id]);
+    const [trainers] = await connection.query('SELECT trainerID, CONCAT(firstName, " ", lastName) AS name FROM Trainers');
+    const [equipment] = await connection.query('SELECT equipmentID, equipmentName FROM Equipment');
+
+    const cls = classes[0];
+    if (cls && cls.scheduleTime instanceof Date) {
+      cls.scheduleTime = cls.scheduleTime.toISOString().slice(0,16);
+    }
+
     connection.release();
-    res.render('classes/edit', { class: classes[0] });
+    res.render('classes/edit', { class: cls, trainers, equipment });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error retrieving class');
@@ -251,6 +292,36 @@ app.get('/reset', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('Error resetting database');
+  }
+});
+
+// Edit entry for any table
+app.post('/edit/:table/:id', async (req, res) => {
+  try {
+    console.log('Edit request body:', req.body);
+    const connection = await pool.getConnection();
+    const data = JSON.stringify(req.body);
+    await connection.query('CALL EditEntry(?, ?, ?)', [req.params.id, req.params.table, data]);
+    connection.release();
+    res.redirect('/' + req.params.table);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error editing entry');
+  }
+});
+
+// Add entry for any table
+app.post('/add/:table', async (req, res) => {
+  try {
+    console.log('Add request body:', req.body);
+    const connection = await pool.getConnection();
+    const data = JSON.stringify(req.body);
+    await connection.query('CALL AddEntry(?, ?)', [req.params.table, data]);
+    connection.release();
+    res.redirect('/' + req.params.table);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error adding entry');
   }
 });
 

@@ -26,8 +26,8 @@ Links to an external site.  */ --}}
           <th>Schedule Time</th>
           <th>Room</th>
           <th>Capacity</th>
-          <th>Trainer ID</th>
-          <th>Equipment ID</th>
+          <th>Trainer</th>
+          <th>Equipment</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -39,8 +39,8 @@ Links to an external site.  */ --}}
             <td>{{this.scheduleTime}}</td>
             <td>{{this.roomNumber}}</td>
             <td>{{this.capacity}}</td>
-            <td>{{this.trainerID}}</td>
-            <td>{{this.equipmentID}}</td>
+            <td>{{this.trainerName}}</td>
+            <td>{{this.equipmentName}}</td>
             <td>
               <a href="/classes/edit/{{this.classID}}" class="btn btn-small btn-edit">Edit</a>
               <a href = "/delete/classes/{{this.classID}}" class="btn btn-small btn-delete" onclick="return confirm('Are you sure?')">Delete</a>

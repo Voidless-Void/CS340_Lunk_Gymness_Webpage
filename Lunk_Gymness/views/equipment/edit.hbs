@@ -16,7 +16,7 @@ Links to an external site.  */ --}}
 <div class="page">
   <h1>Edit Equipment</h1>
   
-  <form action="/equipment/edit/{{equipment.equipmentID}}" class="form">
+  <form method="POST" action="/edit/equipment/{{equipment.equipmentID}}" class="form">
     <div class="form-group">
       <label for="equipmentName">Equipment Name:</label>
       <input type="text" id="equipmentName" name="equipmentName" value="{{equipment.equipmentName}}" required>

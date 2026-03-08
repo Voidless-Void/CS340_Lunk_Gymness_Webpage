@@ -15,7 +15,27 @@ Links to an external site.  */ --}}
 <div class="page">
   <h1>New Class Registration</h1>
   
-  <form action="/classregistrations" class="form">
+  <form method="POST" action="/add/classregistrations" class="form">
+
+    <div class="form-group">
+      <label for="memberID">Member:</label>
+      <select id="memberID" name="memberID" required>
+        <option value="">Select a member</option>
+        {{#each members}}
+        <option value="{{memberID}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    
+    <div class="form-group">
+      <label for="classID">Class:</label>
+      <select id="classID" name="classID" required>
+        <option value="">Select a class</option>
+        {{#each classes}}
+        <option value="{{classID}}">{{className}}</option>
+        {{/each}}
+      </select>
+    </div>
    
     <div class="form-group">
       <label for="registrationDate">Registration Date:</label>
