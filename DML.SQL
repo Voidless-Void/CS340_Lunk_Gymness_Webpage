@@ -5,7 +5,7 @@ UPDATE Trainers SET trainerID = trainerID, firstName = firstName, lastName = las
 INSERT INTO Trainers (trainerID, firstName, lastName, biography) VALUES (@trainerIDInput,@firstNameInput, @lastNameInput, @biographyInput);
 
 --Queries for Classes Table
-SELECT cr.classRegID, CONCAT(m.firstName, ' ', m.lastName) AS memberName, c.className, cr.registrationDate, cr.classType FROM ClassRegistrations cr JOIN Members m ON cr.memberID = m.memberID JOIN Classes c ON cr.classID = c.classID;
+SELECT c.classID, c.className, c.scheduleTime, c.roomNumber, c.capacity, CONCAT(t.firstName, ' ', t.lastName) AS trainerName, e.equipmentName FROM Classes c JOIN Trainers t ON c.trainerID = t.trainerID JOIN Equipment e ON c.equipmentID = e.equipmentID;
 DELETE FROM Classes WHERE classID = ?;
 UPDATE Classes SET trainerID = trainerID, equipmentID = equipmentID, classID = classID, className = className, scheduleTime = scheduleTime, roomNumber = roomNumber, capacity = capacity WHERE classID = ?;
 INSERT INTO Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID) VALUES (@classIDInput, @classNameInput, @scheduleTimeInput, @roomNumberInput, @capacityInput, @trainerIDInput, @equipmentIDInput);
