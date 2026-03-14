@@ -18,6 +18,8 @@ BEGIN
     END IF;
 END //
 
+DROP PROCEDURE IF EXISTS AddEntry;
+
 CREATE PROCEDURE AddEntry(IN tableName VARCHAR(255), IN data JSON)
 BEGIN
   IF tableName = 'equipment' THEN
@@ -39,11 +41,11 @@ BEGIN
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.joinDate'))
     );
   ELSEIF tableName = 'trainers' THEN
-    INSERT INTO Trainers (firstName, lastName, specialty)
+    INSERT INTO Trainers (firstName, lastName, biography)
     VALUES (
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.firstName')),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.lastName')),
-      JSON_UNQUOTE(JSON_EXTRACT(data, '$.specialty'))
+      JSON_UNQUOTE(JSON_EXTRACT(data, '$.biography'))
     );
   ELSEIF tableName = 'classes' THEN
     INSERT INTO Classes (className, scheduleTime, roomNumber, trainerID, capacity, equipmentID)
@@ -52,7 +54,9 @@ BEGIN
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.scheduleTime')),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.trainerID')),
-      JSON_UNQUOTE(JSON_EXTRACT(data, '$.capacity')),
+      IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.className')) = 'Strength Training' OR JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '101', 10, 
+       IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.className')) = 'HIIT Blast' OR JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '102', 15, 
+       IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '103', 20, 25))),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.equipmentID'))
     );
   ELSEIF tableName = 'classregistrations' THEN
@@ -60,7 +64,7 @@ BEGIN
     VALUES (
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.memberID')),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.classID')),
-      JSON_UNQUOTE(JSON_EXTRACT(data, '$.registrationDate')),
+      NOW(),
       JSON_UNQUOTE(JSON_EXTRACT(data, '$.classType'))
     );
   END IF;
@@ -90,7 +94,7 @@ BEGIN
     UPDATE Trainers SET
       firstName = JSON_UNQUOTE(JSON_EXTRACT(data, '$.firstName')),
       lastName = JSON_UNQUOTE(JSON_EXTRACT(data, '$.lastName')),
-      specialty = JSON_UNQUOTE(JSON_EXTRACT(data, '$.specialty'))
+      biography = JSON_UNQUOTE(JSON_EXTRACT(data, '$.biography'))
     WHERE trainerID = id;
   ELSEIF tableName = 'classes' THEN
     UPDATE Classes SET
@@ -98,7 +102,9 @@ BEGIN
       scheduleTime = JSON_UNQUOTE(JSON_EXTRACT(data, '$.scheduleTime')),
       roomNumber = JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')),
       trainerID = JSON_UNQUOTE(JSON_EXTRACT(data, '$.trainerID')),
-      capacity = JSON_UNQUOTE(JSON_EXTRACT(data, '$.capacity')),
+      capacity = IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.className')) = 'Strength Training' OR JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '101', 10, 
+                  IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.className')) = 'HIIT Blast' OR JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '102', 15, 
+                  IF (JSON_UNQUOTE(JSON_EXTRACT(data, '$.roomNumber')) = '103', 20, 25))),
       equipmentID = JSON_UNQUOTE(JSON_EXTRACT(data, '$.equipmentID'))
     WHERE classID = id;
   ELSEIF tableName = 'classregistrations' THEN

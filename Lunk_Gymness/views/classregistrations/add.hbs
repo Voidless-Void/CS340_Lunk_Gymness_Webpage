@@ -3,7 +3,7 @@
       # Prompt used to help generate this file:
       # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
       # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
-      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Trainers (trainerID, firstName, lastName, biography)
       # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
       # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
       # - classregistrations(classRegID, memberID, classID, registrationDate, classType)
@@ -32,19 +32,19 @@ Links to an external site.  */ --}}
       <select id="classID" name="classID" required>
         <option value="">Select a class</option>
         {{#each classes}}
-        <option value="{{classID}}">{{className}}</option>
+        <option value="{{classID}}">{{className}} - {{scheduleTime}}</option>
         {{/each}}
       </select>
-    </div>
-   
-    <div class="form-group">
-      <label for="registrationDate">Registration Date:</label>
-      <input type="date" id="registrationDate" name="registrationDate" required>
     </div>
 
     <div class="form-group">
       <label for="classType">Class Type:</label>
-      <input type="text" id="classType" name="classType" placeholder="e.g. In-person, Virtual">
+      <select type="text" id="classType" name="classType" required>
+        <option value=""> Select class type</option>
+        <option value="Yoga">Yoga</option>
+        <option value="Strength">Spin</option>
+        <option value="Cardio">Cardio</option>
+      </select>
     </div>
     
     <div class="form-actions">

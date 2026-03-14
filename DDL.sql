@@ -69,16 +69,16 @@ BEGIN
     trainerID INT NOT NULL AUTO_INCREMENT,
     firstName VARCHAR(50) NOT NULL,
     lastName VARCHAR(50) NOT NULL,
-    specialty VARCHAR(50),
+    biography VARCHAR(255),
     PRIMARY KEY (trainerID)
   );
 
   -- Insert sample trainers data
-  INSERT INTO Trainers (firstName, lastName, specialty)
+  INSERT INTO Trainers (firstName, lastName, biography)
   VALUES
-    ('Emily', 'Chen', 'Yoga'),
-    ('Marcus', 'Reed', 'Strength'),
-    ('Olivia', 'Turner', 'Cardio');
+    ('Emily', 'Chen', 'Yoga instructor with 5 years of experience'),
+    ('Marcus', 'Reed', 'Strength training specialist'),
+    ('Olivia', 'Turner', 'Cardio coach with a focus on endurance');
 
 
   -- =====================================================

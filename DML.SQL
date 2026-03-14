@@ -1,8 +1,8 @@
 --Queries for Trainers Table
-SELECT trainerID, firstName, lastName, specialty FROM Trainers;
+SELECT trainerID, firstName, lastName, biography FROM Trainers;
 DELETE FROM Trainers WHERE trainerID = ?;
-UPDATE Trainers SET trainerID = trainerID, firstName = firstName, lastName = lastName, specialty=specialty WHERE trainerID = ?;
-INSERT INTO Trainers (trainerID, firstName, lastName, specialty) VALUES (@trainerIDInput,@firstNameInput, @lastNameInput, @specialtyInput);
+UPDATE Trainers SET trainerID = trainerID, firstName = firstName, lastName = lastName, biography=biography WHERE trainerID = ?;
+INSERT INTO Trainers (trainerID, firstName, lastName, biography) VALUES (@trainerIDInput,@firstNameInput, @lastNameInput, @biographyInput);
 
 --Queries for Classes Table
 SELECT classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID FROM Classes;

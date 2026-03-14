@@ -3,7 +3,7 @@
       # Prompt used to help generate this file:
       # Create a very basic and bare bones Handlebars template for a gym database that displays the following tables: 
       # - Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID)
-      # - Trainers (trainerID, firstName, lastName, specialty)
+      # - Trainers (trainerID, firstName, lastName, biography)
       # - Equipment (equipmentID, equipmentName, category, condition, maintenanceDate)
       # - Members (memberID, firstName, lastName, email, phone, membershipType, joinDate)
       # - classregistrations (classRegID, memberID, classID, registrationDate, classType)
@@ -82,7 +82,13 @@ app.get('/equipment/edit/:id', async (req, res) => {
     const connection = await pool.getConnection();
     const [equipment] = await connection.query('SELECT * FROM Equipment WHERE equipmentID = ?', [req.params.id]);
     connection.release();
-    res.render('equipment/edit', { equipment: equipment[0] });
+
+    const equip = equipment[0];
+    if (equip && equip.maintenanceDate instanceof Date) {
+      equip.maintenanceDate = equip.maintenanceDate.toISOString().split('T')[0];
+    }
+
+    res.render('equipment/edit', { equipment: equip });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error retrieving equipment');
