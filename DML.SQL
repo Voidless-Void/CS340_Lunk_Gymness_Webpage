@@ -5,13 +5,13 @@ UPDATE Trainers SET trainerID = trainerID, firstName = firstName, lastName = las
 INSERT INTO Trainers (trainerID, firstName, lastName, biography) VALUES (@trainerIDInput,@firstNameInput, @lastNameInput, @biographyInput);
 
 --Queries for Classes Table
-SELECT classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID FROM Classes;
+SELECT cr.classRegID, CONCAT(m.firstName, ' ', m.lastName) AS memberName, c.className, cr.registrationDate, cr.classType FROM ClassRegistrations cr JOIN Members m ON cr.memberID = m.memberID JOIN Classes c ON cr.classID = c.classID;
 DELETE FROM Classes WHERE classID = ?;
 UPDATE Classes SET trainerID = trainerID, equipmentID = equipmentID, classID = classID, className = className, scheduleTime = scheduleTime, roomNumber = roomNumber, capacity = capacity WHERE classID = ?;
 INSERT INTO Classes (classID, className, scheduleTime, roomNumber, capacity, trainerID, equipmentID) VALUES (@classIDInput, @classNameInput, @scheduleTimeInput, @roomNumberInput, @capacityInput, @trainerIDInput, @equipmentIDInput);
 
 --Queries for ClassRegistrations
-SELECT classRegID, memberID, classID, registrationDate, classType FROM ClassRegistrations;
+SELECT cr.classRegID, CONCAT(m.firstName, ' ', m.lastName) AS memberName, c.className, cr.registrationDate, cr.classType FROM ClassRegistrations cr JOIN Members m ON cr.memberID = m.memberID JOIN Classes c ON cr.classID = c.classID;
 DELETE FROM ClassRegistrations WHERE classRegID = ?;
 UPDATE ClassRegistrations SET classRegID = classRegID, memberID = memberID, classID = classID, registrationDate = registrationDate, classType = classType WHERE classRegID = ?;
 INSERT INTO ClassRegistrations (classRegID, memberID, classID, registrationDate, classType) VALUES (@classRegIDInput, @memberIDInput, @classIDinput, @registrationDateInput, @classTypeInput);
