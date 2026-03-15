@@ -27,7 +27,7 @@ const exphbs = require('express-handlebars');
 const mysql = require('mysql2/promise');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 1342;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -49,10 +49,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 // MySQL Connection Pool
 const pool = mysql.createPool({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || 'Bazinga13542%',
-  database: process.env.DB_NAME || 'LunkGymness',
+  host: process.env.DB_HOST || '',
+  user: process.env.DB_USER || '',
+  password: process.env.DB_PASSWORD || '',
+  database: process.env.DB_NAME || '',
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0
