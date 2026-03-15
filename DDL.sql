@@ -1,6 +1,18 @@
 -- Lunk Gymness Management System Database
--- CS340 Database Course
+-- CS340 Database Course Portfolio Project Deliverable
 -- Created by: Carter Deal and Samuel Dressel
+
+
+-- This SQL script defines the database schema for the Lunk Gymness Management System, including tables for equipment, members, trainers, classes, and class registrations. 
+-- It also includes sample data to populate the tables for testing and demonstration purposes.
+
+-- Citation for the following code:
+-- Date: 2/10/2026
+-- Citation for use of AI tools:
+-- Utilized VSCODE Github Copilot AI-powered autocompletion to assist in writing the procedure code. No prompts were used. 
+-- The overall structure and logic of the procedures were written by Carter Deal and Samuel Dressel.
+-- Source: https://code.visualstudio.com/docs/copilot/ai-powered-suggestions 
+
 
 DELIMITER // 
 
@@ -102,14 +114,14 @@ BEGIN
   INSERT INTO Classes (className, scheduleTime, roomNumber, 
                         trainerID, capacity, equipmentID)
   VALUES
-    ('Morning Yoga', '2024-05-01 08:00:00', 'R101', 
-      (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats')),
-    ('HIIT Blast', '2024-05-01 10:00:00', 'R202', 
-      (SELECT trainerID FROM Trainers WHERE firstName = 'Olivia' AND lastName = 'Turner'), 12, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Treadmill')),
-    ('Strength Training', '2024-05-02 09:30:00', 'R303', 
-      (SELECT trainerID FROM Trainers WHERE firstName = 'Marcus' AND lastName = 'Reed'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Dumbbells Set')),
-    ('Evening Yoga', '2024-05-02 18:00:00', 'R101', 
-      (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats'));
+    ('Morning Yoga', '2024-05-01 08:00:00', '101', 
+      (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 10, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats')),
+    ('HIIT Blast', '2024-05-01 10:00:00', '102', 
+      (SELECT trainerID FROM Trainers WHERE firstName = 'Olivia' AND lastName = 'Turner'), 15, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Treadmill')),
+    ('Strength Training', '2024-05-02 09:30:00', '103', 
+      (SELECT trainerID FROM Trainers WHERE firstName = 'Marcus' AND lastName = 'Reed'), 10, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Dumbbells Set')),
+    ('Evening Yoga', '2024-05-02 18:00:00', '104', 
+      (SELECT trainerID FROM Trainers WHERE firstName = 'Emily' AND lastName = 'Chen'), 25, (SELECT equipmentID FROM Equipment WHERE equipmentName = 'Yoga Mats'));
 
 
   -- =====================================================

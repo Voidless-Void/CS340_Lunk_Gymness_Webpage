@@ -1,8 +1,16 @@
 -- Created by: Carter Deal and Samuel Dressel
+
+-- Citation for the following code:
+-- Date: 2/23/2026
+-- Citation for use of AI tools:
+-- Utilized VSCODE Github Copilot AI-powered autocompletion to assist in writing the procedure code. No prompts were used.
+-- Source: https://code.visualstudio.com/docs/copilot/ai-powered-suggestions 
 DELIMITER //
 
 DROP PROCEDURE IF EXISTS DeleteEntry;
 
+-- Deletes an entry from a specified table based on the provided ID and table name
+-- originality: Original work written by Carter Deal and Samuel Dressel.
 CREATE PROCEDURE DeleteEntry(IN id INT, IN tableName VARCHAR(255))
 BEGIN
     IF tableName = 'members' THEN
@@ -20,6 +28,8 @@ END //
 
 DROP PROCEDURE IF EXISTS AddEntry;
 
+-- Adds a new entry to a specified table based on the provided JSON data and table name
+-- Originality: assisted by VSCODE Github Copilot AI-powered autocompletion, but the overall structure and logic of the procedure were written by Carter Deal and Samuel Dressel.
 CREATE PROCEDURE AddEntry(IN tableName VARCHAR(255), IN data JSON)
 BEGIN
   IF tableName = 'equipment' THEN
@@ -72,6 +82,8 @@ END //
 
 DROP PROCEDURE IF EXISTS EditEntry;
 
+-- Edits an existing entry in a specified table based on the provided ID, JSON data, and table name
+-- Originality: assisted by VSCODE Github Copilot AI-powered autocompletion, but the overall structure and logic of the procedure were written by Carter Deal and Samuel Dressel.
 CREATE PROCEDURE EditEntry(IN id INT, IN tableName VARCHAR(255), IN data JSON)
 BEGIN
   IF tableName = 'equipment' THEN

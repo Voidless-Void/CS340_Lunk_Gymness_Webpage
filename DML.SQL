@@ -29,8 +29,3 @@ SELECT memberID, firstName, lastName, email, phone, membershipType, joinDate FRO
 DELETE FROM Members WHERE memberID = ?;
 UPDATE Members SET memberID = memberID, firstName = firstName, lastName = lastName, email = email, phone = phone, membershipType = membershipType, joinDate = joinDate WHERE memberID = ?;
 INSERT INTO Members (memberID, firstName, lastName, email, phone, membershipType, joinDate) VALUES (@memberIDInput, @firstNameInput, @lastNameInput, @emailInput, @phoneInput, @membershipTypeInput, @joinDateInput);
-
-
-
-
-
