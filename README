@@ -4,6 +4,9 @@
 // The "Delete" button includes a confirmation prompt to prevent accidental deletions. 
 // The "Add New" and "Edit" buttons link to forms for adding new records or editing existing ones. 
 // The "Reset Dababase" button allows users to reset the database to its initial state, which is useful for testing and development purposes.
+// The backend of the application is built using Node.js and Express, which handle the routing and database interactions.
+// TO RUN THE PROGRAM:
+// First install the files PL.sql and DDL.sql into your MySQL database to set up the necessary tables and stored procedures.
 // The program is run by running "npm install" to install the necessary dependencies, and then "npm start" to start the server.
 // The server runs on port 1342, and the user can access the application by navigating to "http://localhost:1342" in their web browser.
 
